@@ -57,6 +57,10 @@ def download_audio(url: str, cancel_flag=None, proxy: str = None):
         'nooverwrites': True,  # Prevent overwrite conflicts
         'continuedl': False,   # Disable continue download
         'nopart': True,        # Don't use .part files - this is key for Windows
+        # Rate limiting to avoid YouTube blocks
+        'sleep_interval': 5,
+        'max_sleep_interval': 10,
+        'sleep_interval_requests': 1,
     }
 
     if os.path.exists(COOKIES_FILE_PATH):
@@ -140,6 +144,10 @@ def download_video(url: str, cancel_flag=None, proxy: str = None):
         'nooverwrites': True,
         'continuedl': False,
         'nopart': True,  # Critical for Windows file locking issues
+        # Rate limiting to avoid YouTube blocks
+        'sleep_interval': 5,
+        'max_sleep_interval': 10,
+        'sleep_interval_requests': 1,
     }
 
     if os.path.exists(COOKIES_FILE_PATH):

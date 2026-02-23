@@ -3,11 +3,13 @@ import logging
 import threading
 import re
 import asyncio
+import base64
 from telegram import Update
 from telegram.error import Conflict, TimedOut, NetworkError
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, MessageHandler, filters
 from config import BOT_TOKEN, DOWNLOAD_DIR
 from downloader import download_audio, download_video
+
 
 # Ensure logs directory exists
 log_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs')
@@ -165,6 +167,8 @@ async def process_audio(update: Update, context: ContextTypes.DEFAULT_TYPE, text
         else:
             await safe_send_message(update, "❌ Failed to download audio. Please try again later.")
     finally:
+        
+        
         # Clean up downloaded file
         if audio_file and os.path.exists(audio_file):
             try:
@@ -272,6 +276,19 @@ async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 def main():
     """Start the bot."""
+    # Decode cookies from environment variable if present (for Render deployment)
+    cookies_base64 = os.getenv('COOKIES_BASE64')
+    if cookies_base64:
+        print("Decoding cookies.txt from environment...")
+        try:
+            cookies_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'cookies.txt')
+            with open(cookies_path, 'wb') as f:
+                f.write(base64.b64decode(cookies_base64))
+            print("✅ Cookies.txt created successfully!")
+        except Exception as e:
+            print(f"Error decoding cookies: {e}")
+            logger.error(f"Error decoding cookies: {e}")
+    
     # Validate environment
     if not BOT_TOKEN:
         raise ValueError("BOT_TOKEN is not configured. Please set it in config.py")
