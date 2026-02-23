@@ -36,31 +36,38 @@ def download_audio(url: str, cancel_flag=None, proxy: str = None):
 
     # Create a temporary directory for downloads to avoid file locking issues
     temp_download_dir = tempfile.mkdtemp()
+    temp_template = os.path.join(temp_download_dir, '%(title)s.%(ext)s')
     
     ydl_opts = {
-        'format': 'bestaudio/best',
-        'outtmpl': os.path.join(temp_download_dir, '%(title)s.%(ext)s'),  # Use temp directory
-        'noplaylist': True,
-        'postprocessors': [{
-            'key': 'FFmpegExtractAudio',
-            'preferredcodec': 'mp3',
-            'preferredquality': '192',
-        }],
-        'http_headers': {'User-Agent': random.choice(USER_AGENTS)},
-        'nocheckcertificate': True,
-        'ignoreerrors': False,
-        'verbose': True,
-        'force-ipv4': True,
-        'ratelimit': 1000000,
-        'progress_hooks': [progress_hook],
-        'writethumbnail': False,
-        'nooverwrites': True,  # Prevent overwrite conflicts
-        'continuedl': False,   # Disable continue download
-        'nopart': True,        # Don't use .part files - this is key for Windows
-        # Rate limiting to avoid YouTube blocks
-        'sleep_interval': 5,
-        'max_sleep_interval': 10,
-        'sleep_interval_requests': 1,
+    'format': 'bestaudio[ext=m4a]/bestaudio/best',
+    'outtmpl': temp_template,
+    'noplaylist': True,
+    'postprocessors': [{
+        'key': 'FFmpegExtractAudio',
+        'preferredcodec': 'mp3',
+        'preferredquality': '192',
+    }],
+    'http_headers': {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/115.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept-Language': 'en-us,en;q=0.5',
+        'Sec-Fetch-Mode': 'navigate',
+    },
+    'nocheckcertificate': True,
+    'ignoreerrors': False,
+    'verbose': True,
+    'force-ipv4': True,
+    'ratelimit': 1000000,
+    'progress_hooks': [progress_hook],
+    'writethumbnail': False,
+    'nooverwrites': True,
+    'continuedl': False,
+    'nopart': True,
+    'sleep_interval': 5,
+    'max_sleep_interval': 10,
+    'sleep_interval_requests': 1,
+    'cookiefile': 'cookies.txt',
+    'extractor_args': {'youtube': 'player_client=android'},
     }
 
     if os.path.exists(COOKIES_FILE_PATH):
