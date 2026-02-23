@@ -42,6 +42,7 @@ def download_audio(url: str, cancel_flag=None, proxy: str = None):
     'format': 'bestaudio[ext=m4a]/bestaudio/best',
     'outtmpl': temp_template,
     'js_runtimes': {'node': {}},
+    'remote_components': {'ejs': 'github'},
     'noplaylist': True,
     'postprocessors': [{
         'key': 'FFmpegExtractAudio',
@@ -141,6 +142,7 @@ def download_video(url: str, cancel_flag=None, proxy: str = None):
         'format': 'best[height<=720]',  # Simpler format selection
         'outtmpl': os.path.join(temp_download_dir, '%(title)s.%(ext)s'),
         'js_runtimes': {'node': {}},
+        'remote_components': {'ejs': 'github'},
         'noplaylist': True,
         'http_headers': {'User-Agent': random.choice(USER_AGENTS)},
         'nocheckcertificate': True,
