@@ -5,10 +5,10 @@ import re
 import tempfile
 import shutil
 
-# --- Node.js detection for yt-dlp (ensures JS challenges can be solved if needed) ---
+# Node.js detection (ensures yt-dlp can use it if needed)
 print("Node.js found:", shutil.which("node"))
 if not shutil.which("node"):
-    # Fallback: manually set path to node.exe (adjust if your path differs)
+    # Fallback for local Windows (adjust path if necessary)
     os.environ['YT_DLP_EXE_NODE'] = r'C:\Program Files\nodejs\node.exe'
 
 from yt_dlp import YoutubeDL
@@ -22,7 +22,6 @@ USER_AGENTS = [
 ]
 
 def sanitize_filename(filename):
-    """Remove problematic characters and truncate long filenames."""
     if not filename:
         return "audio_download"
     cleaned = re.sub(r'[\\/*?:"<>|]', "", filename)
@@ -37,7 +36,7 @@ def download_audio(url: str, cancel_flag=None, proxy: str = None):
     temp_download_dir = tempfile.mkdtemp()
 
     ydl_opts = {
-        'format': 'bestaudio/best',                     # best audio quality
+        'format': 'bestaudio/best',
         'outtmpl': os.path.join(temp_download_dir, '%(title)s.%(ext)s'),
         'noplaylist': True,
         'postprocessors': [{
@@ -45,7 +44,7 @@ def download_audio(url: str, cancel_flag=None, proxy: str = None):
             'preferredcodec': 'mp3',
             'preferredquality': '192',
         }],
-        # Force Android client – provides direct URLs without heavy JS checks
+        # Force Android client (provides direct URLs, avoids heavy JS challenges)
         'extractor_args': {'youtube': 'player_client=android'},
         'http_headers': {
             'User-Agent': random.choice(USER_AGENTS),
@@ -55,9 +54,14 @@ def download_audio(url: str, cancel_flag=None, proxy: str = None):
         'nocheckcertificate': True,
         'ignoreerrors': False,
         'progress_hooks': [progress_hook],
+        # Cookie support – if the file exists, use it (but note: cookies may cause client switching)
         'cookiefile': COOKIES_FILE_PATH if os.path.exists(COOKIES_FILE_PATH) else None,
-        'quiet': False,          # set to True in production if desired
+        'quiet': False,
         'no_warnings': False,
+        # Sleep intervals to avoid rate limiting (HTTP 429)
+        'sleep_interval': 10,           # seconds between requests
+        'max_sleep_interval': 20,
+        'sleep_interval_requests': 2,    # between API requests
     }
 
     if proxy:
@@ -101,7 +105,6 @@ def download_video(url: str, cancel_flag=None, proxy: str = None):
     temp_download_dir = tempfile.mkdtemp()
 
     ydl_opts = {
-        # Prefer MP4 up to 720p for Telegram compatibility
         'format': 'best[height<=720][ext=mp4]/best[height<=720]/best',
         'outtmpl': os.path.join(temp_download_dir, '%(title)s.%(ext)s'),
         'noplaylist': True,
@@ -110,6 +113,9 @@ def download_video(url: str, cancel_flag=None, proxy: str = None):
         'nocheckcertificate': True,
         'progress_hooks': [progress_hook],
         'cookiefile': COOKIES_FILE_PATH if os.path.exists(COOKIES_FILE_PATH) else None,
+        'sleep_interval': 10,
+        'max_sleep_interval': 20,
+        'sleep_interval_requests': 2,
     }
 
     if proxy:

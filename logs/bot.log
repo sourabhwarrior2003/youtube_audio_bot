@@ -4508,3 +4508,236 @@ telegram.error.Conflict: Conflict: terminated by other getUpdates request; make 
 2026-02-28 00:22:16,789 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
 2026-02-28 00:22:48,557 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
 2026-02-28 00:23:19,894 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:23:56,131 - __main__ - INFO - Bot is starting...
+2026-02-28 00:23:56,131 - __main__ - INFO - Starting in DEVELOPMENT mode (polling)
+2026-02-28 00:23:57,163 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getMe "HTTP/1.1 200 OK"
+2026-02-28 00:23:57,502 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/deleteWebhook "HTTP/1.1 200 OK"
+2026-02-28 00:23:57,506 - apscheduler.scheduler - INFO - Scheduler started
+2026-02-28 00:23:57,507 - telegram.ext.Application - INFO - Application started
+2026-02-28 00:24:05,016 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:24:06,255 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/sendMessage "HTTP/1.1 200 OK"
+2026-02-28 00:24:18,957 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/sendAudio "HTTP/1.1 200 OK"
+2026-02-28 00:24:19,486 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/sendMessage "HTTP/1.1 200 OK"
+2026-02-28 00:24:19,488 - __main__ - INFO - Cleaned up audio file: d:\Sourabh\Projects\youtube_audio_bot\downloads\Ishq Official Lyrical Video I Amir Ameer Faheem Abdullah Rauhan Malik I Love Song 2024.mp3
+2026-02-28 00:24:36,356 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:25:07,684 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:25:39,019 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:26:10,364 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:26:41,692 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:27:13,029 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:27:44,367 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:28:15,703 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:28:47,032 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:29:18,370 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:29:49,705 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:30:21,051 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:30:52,388 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:31:23,718 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:31:55,051 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:32:26,385 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:32:57,725 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:33:29,061 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:34:00,399 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:34:31,737 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:35:03,072 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:35:34,408 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:36:05,743 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:36:37,084 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:37:08,422 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:37:39,746 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:38:11,080 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:38:42,419 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:39:13,753 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:39:45,081 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:40:16,416 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:40:47,750 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:41:19,082 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:41:50,412 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:42:21,748 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:42:53,076 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:43:24,401 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:43:55,731 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:44:27,070 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:44:58,403 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:45:29,731 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:46:01,058 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:46:32,384 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:47:03,719 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:47:35,065 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:48:06,438 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:48:37,764 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:49:09,104 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:49:40,441 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:50:11,770 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:50:43,099 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:51:14,436 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:51:45,773 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:52:17,098 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:52:19,257 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:52:20,447 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/sendMessage "HTTP/1.1 200 OK"
+2026-02-28 00:52:27,983 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:52:29,112 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/sendMessage "HTTP/1.1 200 OK"
+2026-02-28 00:52:31,523 - __main__ - ERROR - Audio download error: [0;31mERROR:[0m [youtube] hHuG7FIKgtc: Requested format is not available. Use --list-formats for a list of available formats
+2026-02-28 00:52:32,023 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/sendMessage "HTTP/1.1 200 OK"
+2026-02-28 00:52:59,325 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:53:11,897 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:53:13,024 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/sendMessage "HTTP/1.1 200 OK"
+2026-02-28 00:53:23,208 - __main__ - WARNING - Send audio attempt 1 failed: Timed out
+2026-02-28 00:53:30,758 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/sendAudio "HTTP/1.1 200 OK"
+2026-02-28 00:53:31,249 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/sendMessage "HTTP/1.1 200 OK"
+2026-02-28 00:53:31,252 - __main__ - INFO - Cleaned up audio file: d:\Sourabh\Projects\youtube_audio_bot\downloads\Ishq Official Lyrical Video I Amir Ameer Faheem Abdullah Rauhan Malik I Love Song 2024.mp3
+2026-02-28 00:53:43,228 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:54:14,566 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:54:45,888 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:55:17,220 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:55:48,570 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:56:19,902 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:56:51,225 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:57:22,558 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:57:53,882 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:58:25,208 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:58:56,537 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 200 OK"
+2026-02-28 00:59:05,758 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 409 Conflict"
+2026-02-28 00:59:05,759 - telegram.ext.Updater - ERROR - Error while getting Updates: Conflict: terminated by setWebhook request
+2026-02-28 00:59:05,759 - __main__ - ERROR - Exception while handling an update: Conflict: terminated by setWebhook request
+Traceback (most recent call last):
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\ext\_updater.py", line 607, in _network_loop_retry
+    if not await action_cb():
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\ext\_updater.py", line 335, in polling_action_cb
+    raise exc
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\ext\_updater.py", line 320, in polling_action_cb
+    updates = await self.bot.get_updates(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\ext\_extbot.py", line 543, in get_updates
+    updates = await super().get_updates(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\_bot.py", line 381, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\_bot.py", line 3661, in get_updates
+    await self._post(
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\_bot.py", line 469, in _post
+    return await self._do_post(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\ext\_extbot.py", line 325, in _do_post
+    return await super()._do_post(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\_bot.py", line 497, in _do_post
+    return await request.post(
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\request\_baserequest.py", line 168, in post
+    result = await self._request_wrapper(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\request\_baserequest.py", line 330, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by setWebhook request
+2026-02-28 00:59:05,764 - __main__ - ERROR - Unexpected error sending message: 'NoneType' object has no attribute 'message'
+2026-02-28 00:59:10,602 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 409 Conflict"
+2026-02-28 00:59:10,605 - telegram.ext.Updater - ERROR - Error while getting Updates: Conflict: can't use getUpdates method while webhook is active; use deleteWebhook to delete the webhook first
+2026-02-28 00:59:10,606 - __main__ - ERROR - Exception while handling an update: Conflict: can't use getUpdates method while webhook is active; use deleteWebhook to delete the webhook first
+Traceback (most recent call last):
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\ext\_updater.py", line 607, in _network_loop_retry
+    if not await action_cb():
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\ext\_updater.py", line 335, in polling_action_cb
+    raise exc
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\ext\_updater.py", line 320, in polling_action_cb
+    updates = await self.bot.get_updates(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\ext\_extbot.py", line 543, in get_updates
+    updates = await super().get_updates(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\_bot.py", line 381, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\_bot.py", line 3661, in get_updates
+    await self._post(
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\_bot.py", line 469, in _post
+    return await self._do_post(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\ext\_extbot.py", line 325, in _do_post
+    return await super()._do_post(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\_bot.py", line 497, in _do_post
+    return await request.post(
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\request\_baserequest.py", line 168, in post
+    result = await self._request_wrapper(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\request\_baserequest.py", line 330, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: can't use getUpdates method while webhook is active; use deleteWebhook to delete the webhook first
+2026-02-28 00:59:10,609 - __main__ - ERROR - Unexpected error sending message: 'NoneType' object has no attribute 'message'
+2026-02-28 00:59:13,165 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 409 Conflict"
+2026-02-28 00:59:13,166 - telegram.ext.Updater - ERROR - Error while getting Updates: Conflict: can't use getUpdates method while webhook is active; use deleteWebhook to delete the webhook first
+2026-02-28 00:59:13,167 - __main__ - ERROR - Exception while handling an update: Conflict: can't use getUpdates method while webhook is active; use deleteWebhook to delete the webhook first
+Traceback (most recent call last):
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\ext\_updater.py", line 607, in _network_loop_retry
+    if not await action_cb():
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\ext\_updater.py", line 335, in polling_action_cb
+    raise exc
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\ext\_updater.py", line 320, in polling_action_cb
+    updates = await self.bot.get_updates(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\ext\_extbot.py", line 543, in get_updates
+    updates = await super().get_updates(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\_bot.py", line 381, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\_bot.py", line 3661, in get_updates
+    await self._post(
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\_bot.py", line 469, in _post
+    return await self._do_post(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\ext\_extbot.py", line 325, in _do_post
+    return await super()._do_post(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\_bot.py", line 497, in _do_post
+    return await request.post(
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\request\_baserequest.py", line 168, in post
+    result = await self._request_wrapper(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\request\_baserequest.py", line 330, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: can't use getUpdates method while webhook is active; use deleteWebhook to delete the webhook first
+2026-02-28 00:59:13,169 - __main__ - ERROR - Unexpected error sending message: 'NoneType' object has no attribute 'message'
+2026-02-28 00:59:16,865 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7415370382:AAFsQ5kpm1j97oTIupMIORc6VXqcbXNKfjM/getUpdates "HTTP/1.1 409 Conflict"
+2026-02-28 00:59:16,867 - telegram.ext.Updater - ERROR - Error while getting Updates: Conflict: can't use getUpdates method while webhook is active; use deleteWebhook to delete the webhook first
+2026-02-28 00:59:16,870 - __main__ - ERROR - Exception while handling an update: Conflict: can't use getUpdates method while webhook is active; use deleteWebhook to delete the webhook first
+Traceback (most recent call last):
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\ext\_updater.py", line 607, in _network_loop_retry
+    if not await action_cb():
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\ext\_updater.py", line 335, in polling_action_cb
+    raise exc
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\ext\_updater.py", line 320, in polling_action_cb
+    updates = await self.bot.get_updates(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\ext\_extbot.py", line 543, in get_updates
+    updates = await super().get_updates(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\_bot.py", line 381, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\_bot.py", line 3661, in get_updates
+    await self._post(
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\_bot.py", line 469, in _post
+    return await self._do_post(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\ext\_extbot.py", line 325, in _do_post
+    return await super()._do_post(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\_bot.py", line 497, in _do_post
+    return await request.post(
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\request\_baserequest.py", line 168, in post
+    result = await self._request_wrapper(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\priya\AppData\Roaming\Python\Python311\site-packages\telegram\request\_baserequest.py", line 330, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: can't use getUpdates method while webhook is active; use deleteWebhook to delete the webhook first
+2026-02-28 00:59:16,873 - __main__ - ERROR - Unexpected error sending message: 'NoneType' object has no attribute 'message'
