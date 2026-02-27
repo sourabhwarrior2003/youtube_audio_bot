@@ -3,30 +3,30 @@ import time
 import random
 import re
 import tempfile
+import shutil
+
+# --- Node.js detection for yt-dlp (ensures JS challenges can be solved if needed) ---
+print("Node.js found:", shutil.which("node"))
+if not shutil.which("node"):
+    # Fallback: manually set path to node.exe (adjust if your path differs)
+    os.environ['YT_DLP_EXE_NODE'] = r'C:\Program Files\nodejs\node.exe'
+
 from yt_dlp import YoutubeDL
 from config import DOWNLOAD_DIR
 
 COOKIES_FILE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'cookies.txt')
 
 USER_AGENTS = [
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/115.0.0.0 Safari/537.36',
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:116.0) Firefox/116.0',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 13_5) Safari/605.1.15',
-    'Mozilla/5.0 (X11; Linux x86_64) Chrome/115.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
 ]
 
 def sanitize_filename(filename):
-    """Remove special characters and truncate long filenames"""
+    """Remove problematic characters and truncate long filenames."""
     if not filename:
         return "audio_download"
-    
-    # Remove invalid Windows characters and problematic symbols
     cleaned = re.sub(r'[\\/*?:"<>|]', "", filename)
-    # Replace multiple spaces with single space
-    cleaned = re.sub(r'\s+', ' ', cleaned)
-    # Remove leading/trailing spaces and dots
-    cleaned = cleaned.strip().strip('.')
-    # Truncate to 100 characters
+    cleaned = re.sub(r'\s+', ' ', cleaned).strip().strip('.')
     return cleaned[:100] if cleaned else "audio_download"
 
 def download_audio(url: str, cancel_flag=None, proxy: str = None):
@@ -34,46 +34,32 @@ def download_audio(url: str, cancel_flag=None, proxy: str = None):
         if cancel_flag and cancel_flag.is_set():
             raise Exception("Download cancelled by user.")
 
-    # Create a temporary directory for downloads to avoid file locking issues
     temp_download_dir = tempfile.mkdtemp()
-    temp_template = os.path.join(temp_download_dir, '%(title)s.%(ext)s')
-    
+
     ydl_opts = {
-    'format': 'bestaudio[ext=m4a]/bestaudio/best',
-    'outtmpl': temp_template,
-    'js_runtimes': {'node': {}},
-    'remote_components': ['ejs:github'],
-    'noplaylist': True,
-    'postprocessors': [{
-        'key': 'FFmpegExtractAudio',
-        'preferredcodec': 'mp3',
-        'preferredquality': '192',
-    }],
-    'http_headers': {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/115.0.0.0 Safari/537.36',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Accept-Language': 'en-us,en;q=0.5',
-        'Sec-Fetch-Mode': 'navigate',
-    },
-    'nocheckcertificate': True,
-    'ignoreerrors': False,
-    'verbose': True,
-    'force-ipv4': True,
-    'ratelimit': 1000000,
-    'progress_hooks': [progress_hook],
-    'writethumbnail': False,
-    'nooverwrites': True,
-    'continuedl': False,
-    'nopart': True,
-    'sleep_interval': 5,
-    'max_sleep_interval': 10,
-    'sleep_interval_requests': 1,
-    'cookiefile': 'cookies.txt',
-    'extractor_args': {'youtube': 'player_client=android'},
+        'format': 'bestaudio/best',                     # best audio quality
+        'outtmpl': os.path.join(temp_download_dir, '%(title)s.%(ext)s'),
+        'noplaylist': True,
+        'postprocessors': [{
+            'key': 'FFmpegExtractAudio',
+            'preferredcodec': 'mp3',
+            'preferredquality': '192',
+        }],
+        # Force Android client – provides direct URLs without heavy JS checks
+        'extractor_args': {'youtube': 'player_client=android'},
+        'http_headers': {
+            'User-Agent': random.choice(USER_AGENTS),
+            'Accept': '*/*',
+            'Accept-Language': 'en-US,en;q=0.5',
+        },
+        'nocheckcertificate': True,
+        'ignoreerrors': False,
+        'progress_hooks': [progress_hook],
+        'cookiefile': COOKIES_FILE_PATH if os.path.exists(COOKIES_FILE_PATH) else None,
+        'quiet': False,          # set to True in production if desired
+        'no_warnings': False,
     }
 
-    if os.path.exists(COOKIES_FILE_PATH):
-        ydl_opts['cookiefile'] = COOKIES_FILE_PATH
     if proxy:
         ydl_opts['proxy'] = proxy
 
@@ -82,87 +68,50 @@ def download_audio(url: str, cancel_flag=None, proxy: str = None):
             start_time = time.time()
             info = ydl.extract_info(url, download=True)
             elapsed_time = time.time() - start_time
-            
-            if not info:
-                raise Exception("Failed to extract video information")
-            
+
             original_title = info.get('title', 'audio')
             sanitized_title = sanitize_filename(original_title)
-            
-            # Look for the downloaded file in the temp directory
-            downloaded_files = []
-            for file in os.listdir(temp_download_dir):
-                if file.endswith('.mp3'):
-                    downloaded_files.append(file)
-            
+
+            # Look for the converted MP3 file
+            downloaded_files = [f for f in os.listdir(temp_download_dir) if f.endswith('.mp3')]
             if not downloaded_files:
-                # If no MP3 found, look for the original downloaded file
-                for file in os.listdir(temp_download_dir):
-                    if file.endswith(('.mp4', '.webm', '.m4a', '.opus')):
-                        downloaded_files.append(file)
-            
+                # Fallback: any file (if conversion didn't happen but download succeeded)
+                downloaded_files = os.listdir(temp_download_dir)
+
             if not downloaded_files:
-                raise FileNotFoundError("No downloaded files found")
-            
-            # Use the first found file
+                raise FileNotFoundError("No files found in temp directory")
+
             temp_file_path = os.path.join(temp_download_dir, downloaded_files[0])
             final_filename = os.path.join(DOWNLOAD_DIR, f"{sanitized_title}.mp3")
-            
-            # Move the file from temp directory to final destination
-            import shutil
+
             shutil.move(temp_file_path, final_filename)
-            
-            # Clean up temp directory
             shutil.rmtree(temp_download_dir, ignore_errors=True)
-            
-            if os.path.exists(final_filename):
-                return final_filename, original_title, elapsed_time
-            else:
-                raise FileNotFoundError("File move failed")
-            
+
+            return final_filename, original_title, elapsed_time
+
     except Exception as e:
-        # Clean up temp directory on error
-        import shutil
         shutil.rmtree(temp_download_dir, ignore_errors=True)
-        
-        if cancel_flag and cancel_flag.is_set():
-            raise Exception("Download cancelled by user")
-        else:
-            raise e
+        raise e
 
 def download_video(url: str, cancel_flag=None, proxy: str = None):
     def progress_hook(d):
         if cancel_flag and cancel_flag.is_set():
             raise Exception("Download cancelled by user.")
 
-    # Create a temporary directory for downloads
     temp_download_dir = tempfile.mkdtemp()
-    
+
     ydl_opts = {
-        'format': 'best[height<=720]',  # Simpler format selection
+        # Prefer MP4 up to 720p for Telegram compatibility
+        'format': 'best[height<=720][ext=mp4]/best[height<=720]/best',
         'outtmpl': os.path.join(temp_download_dir, '%(title)s.%(ext)s'),
-        'js_runtimes': {'node': {}},
-        'remote_components': ['ejs:github'],
         'noplaylist': True,
+        'extractor_args': {'youtube': 'player_client=android'},
         'http_headers': {'User-Agent': random.choice(USER_AGENTS)},
         'nocheckcertificate': True,
-        'ignoreerrors': False,
-        'verbose': True,
-        'force-ipv4': True,
-        'ratelimit': 1000000,
         'progress_hooks': [progress_hook],
-        'writethumbnail': False,
-        'nooverwrites': True,
-        'continuedl': False,
-        'nopart': True,  # Critical for Windows file locking issues
-        # Rate limiting to avoid YouTube blocks
-        'sleep_interval': 5,
-        'max_sleep_interval': 10,
-        'sleep_interval_requests': 1,
+        'cookiefile': COOKIES_FILE_PATH if os.path.exists(COOKIES_FILE_PATH) else None,
     }
 
-    if os.path.exists(COOKIES_FILE_PATH):
-        ydl_opts['cookiefile'] = COOKIES_FILE_PATH
     if proxy:
         ydl_opts['proxy'] = proxy
 
@@ -171,44 +120,22 @@ def download_video(url: str, cancel_flag=None, proxy: str = None):
             start_time = time.time()
             info = ydl.extract_info(url, download=True)
             elapsed_time = time.time() - start_time
-            
-            if not info:
-                raise Exception("Failed to extract video information")
-            
+
             original_title = info.get('title', 'video')
             sanitized_title = sanitize_filename(original_title)
-            
-            # Look for the downloaded file
-            downloaded_files = []
-            for file in os.listdir(temp_download_dir):
-                if file.endswith(('.mp4', '.webm', '.mkv')):
-                    downloaded_files.append(file)
-            
+
+            downloaded_files = [f for f in os.listdir(temp_download_dir) if f.endswith(('.mp4', '.webm', '.mkv'))]
             if not downloaded_files:
-                raise FileNotFoundError("No downloaded video files found")
-            
-            # Use the first found file
+                raise FileNotFoundError("No video files found")
+
             temp_file_path = os.path.join(temp_download_dir, downloaded_files[0])
             final_filename = os.path.join(DOWNLOAD_DIR, f"{sanitized_title}.mp4")
-            
-            # Move the file
-            import shutil
+
             shutil.move(temp_file_path, final_filename)
-            
-            # Clean up temp directory
             shutil.rmtree(temp_download_dir, ignore_errors=True)
-            
-            if os.path.exists(final_filename):
-                return final_filename, original_title, elapsed_time
-            else:
-                raise FileNotFoundError("File move failed")
-            
+
+            return final_filename, original_title, elapsed_time
+
     except Exception as e:
-        # Clean up temp directory on error
-        import shutil
         shutil.rmtree(temp_download_dir, ignore_errors=True)
-        
-        if cancel_flag and cancel_flag.is_set():
-            raise Exception("Download cancelled by user")
-        else:
-            raise e
+        raise e
