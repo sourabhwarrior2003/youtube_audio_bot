@@ -3,3 +3,5 @@ yt-dlp @ git+https://github.com/yt-dlp/yt-dlp.git@master
 ffmpeg-python
 curl-cffi
 brotli
+python-dotenv==1.0.1
+

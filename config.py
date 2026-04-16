@@ -1,17 +1,18 @@
 import os
+from dotenv import load_dotenv
 
-BOT_TOKEN = os.environ.get("BOT_TOKEN")
-if BOT_TOKEN:
-    BOT_TOKEN = BOT_TOKEN.strip()  # Remove extra spaces
-if not BOT_TOKEN:
-    raise ValueError("BOT_TOKEN is not configured. Please set it in environment variable")
-# Directory to store downloaded files
-DOWNLOAD_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'downloads')
-# Download directory - use temp directory for cloud deployment
+# Auto-load .env for local dev (silent fail if no .env)
+load_dotenv()
+
+BOT_TOKEN = os.getenv("BOT_TOKEN", "").strip()
 DOWNLOAD_DIR = os.getenv('DOWNLOAD_DIR', os.path.join(os.path.dirname(__file__), 'downloads'))
-
-# Optional: Proxy configuration
 PROXY = os.getenv('PROXY', None)
 
-# Create download directory if it doesn't exist
+if not BOT_TOKEN:
+    print("⚠️  BOT_TOKEN missing. Create .env from .env.example and add your token.")
+    print("For production (Render), set BOT_TOKEN env var.")
+else:
+    print(f"✅ BOT_TOKEN loaded ({len(BOT_TOKEN)} chars)")
+    
+# Create download directory
 os.makedirs(DOWNLOAD_DIR, exist_ok=True)
