@@ -45,7 +45,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "- MP3 (audio)\n"
         "- MP4 (video)\n\n"
         "📬 [Contact Developer](https://t.me/Thewarrior2003)\n"
-        "*your frind(sourabh)*"
+        "*your frind*"
     )
     await safe_send_message(update, description_text, parse_mode="Markdown")
 
