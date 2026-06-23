@@ -3,13 +3,30 @@ import logging
 import threading
 import re
 import asyncio
-import base64
 from telegram import Update
 from telegram.error import Conflict, TimedOut, NetworkError
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, MessageHandler, filters
 from config import BOT_TOKEN, DOWNLOAD_DIR
-from downloader import download_audio, download_video
-
+from database import (
+    save_user,
+    save_song,
+    save_download,
+    get_user_by_telegram_id
+)
+from telegram import (
+    Update,
+    ReplyKeyboardMarkup
+)
+from database import (
+    save_user,
+    save_song,
+    save_download,
+    get_user_by_telegram_id,
+    get_total_users,
+    get_total_songs,
+    get_total_downloads,
+    get_trending_songs
+)
 
 # Ensure logs directory exists
 log_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs')
@@ -32,44 +49,109 @@ active_downloads = {}
 # Regex pattern to detect YouTube URLs
 YOUTUBE_URL_PATTERN = re.compile(r'(https?://)?(www\.)?(youtube\.com|youtu\.?be)/.+')
 
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    description_text = (
-       "👋 *Welcome to YouTube Downloader Bot!*\n\n"
-        "With this bot, you can download:\n"
-        "🎧 *Audio* — /audio <YouTube URL>\n"
-        "🎥 *Video* — /video <YouTube URL>\n\n"
-        "Example:\n"
-        "/audio https://youtube.com/watch?v=abcd1234\n"
-        "/video https://youtube.com/watch?v=abcd1234\n\n"
-        "ℹ️ *Supported formats:*\n"
-        "- MP3 (audio)\n"
-        "- MP4 (video)\n\n"
-        "📬 [Contact Developer](https://t.me/Thewarrior2003)\n"
-        "*your frind*"
-    )
-    await safe_send_message(update, description_text, parse_mode="Markdown")
+async def start(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE
+):
 
+    keyboard = [
+        ["🎧 Audio", "🎥 Video"],
+        ["📊 Stats", "📜 History"],
+        ["🔥 Trending", "❓ Help"]
+    ]
+
+    reply_markup = ReplyKeyboardMarkup(
+        keyboard,
+        resize_keyboard=True
+    )
+
+    description_text = (
+        "👋 Welcome to YouTube Downloader Bot!\n\n"
+        "🎧 Download Audio\n"
+        "🎥 Download Video\n"
+        "📊 View Bot Statistics\n"
+        "📜 View Download History\n"
+        "🔥 View Trending Songs\n\n"
+        "Send a YouTube URL directly or use commands:\n\n"
+        "/audio <youtube_url>\n"
+        "/video <youtube_url>\n\n"
+        "Example:\n"
+        "https://youtube.com/watch?v=abcd1234\n\n"
+        "📬 Developer: @Thewarrior2003"
+    )
+
+    await update.message.reply_text(
+        description_text,
+        reply_markup=reply_markup
+    )
 async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
+
     user_id = update.effective_user.id
     text = update.message.text.strip()
 
+    if text == "❓ Help":
+        await help_command(update, context)
+        return
+
+    if text == "📊 Stats":
+        await stats_command(update, context)
+        return
+
+    if text == "📜 History":
+        await history_command(update, context)
+        return
+
+    if text == "🔥 Trending":
+        await trending_command(update, context)
+        return
+
+    if text == "🎧 Audio":
+        await safe_send_message(
+            update,
+            "Send a YouTube URL and I will download the audio."
+        )
+        return
+
+    if text == "🎥 Video":
+        await safe_send_message(
+            update,
+            "Send a YouTube URL and I will download the video."
+        )
+        return
+
     if text.lower() in ["hi", "hello"]:
-        await safe_send_message(update, "👋 Hi! Send a YouTube link to get started.")
+        await safe_send_message(
+            update,
+            "👋 Hi! Send a YouTube link to get started."
+        )
         return
 
     if YOUTUBE_URL_PATTERN.search(text):
         if "video" in text.lower():
-            await process_video(update, context, text, user_id)
+            await process_video(
+                update,
+                context,
+                text,
+                user_id
+            )
         else:
-            await process_audio(update, context, text, user_id)
+            await process_audio(
+                update,
+                context,
+                text,
+                user_id
+            )
     else:
-        await safe_send_message(update, "Please send a valid YouTube link.")
+        await safe_send_message(
+            update,
+            "Please send a valid YouTube link."
+        )
 
-async def safe_send_message(update: Update, text: str, max_retries=3, parse_mode=None):
+async def safe_send_message(update: Update, text: str, max_retries=3):
     """Safely send message with retry logic and error handling"""
     for attempt in range(max_retries):
         try:
-            await update.message.reply_text(text, parse_mode=parse_mode)
+            await update.message.reply_text(text)
             return True
         except (TimedOut, NetworkError) as e:
             logger.warning(f"Send message attempt {attempt + 1} failed: {e}")
@@ -131,54 +213,132 @@ async def safe_send_video(update: Update, video_file: str, caption: str, max_ret
 
 async def process_audio(update: Update, context: ContextTypes.DEFAULT_TYPE, text: str, user_id: int):
     await safe_send_message(update, "⏳ Downloading audio...")
+
     cancel_flag = threading.Event()
     active_downloads[user_id] = cancel_flag
-    
+
     audio_file = None
+
     try:
         url = YOUTUBE_URL_PATTERN.search(text).group(0)
-        
-        audio_file, title, elapsed_time = download_audio(url, cancel_flag)
+
+        # Import here to avoid circular imports
+        from downloader import download_audio
+
+        audio_file, title, elapsed_time = download_audio(
+            url,
+            cancel_flag
+        )
+
+        # ==========================
+        # Save Data To Supabase
+        # ==========================
+
+        telegram_user = update.effective_user
+
+        save_user(
+            telegram_user
+        )
+
+        db_user = get_user_by_telegram_id(
+            telegram_user.id
+        )
+
+        song = save_song(
+            title,
+            url
+        )
+
+        save_download(
+            user_id=db_user["id"],
+            song_id=song["id"]
+        )
+
+        # ==========================
+        # Existing Logic
+        # ==========================
 
         if not os.path.exists(audio_file):
-            await safe_send_message(update, f"Audio file not found: {audio_file}")
+            await safe_send_message(
+                update,
+                f"Audio file not found: {audio_file}"
+            )
             return
 
-        file_size = os.path.getsize(audio_file) / (1024 * 1024)  # Size in MB
-        if file_size > 50:  # Telegram file size limit is 50MB
-            await safe_send_message(update, f"File too large ({file_size:.1f}MB). Telegram limit is 50MB.")
+        file_size = (
+            os.path.getsize(audio_file)
+            / (1024 * 1024)
+        )
+
+        if file_size > 50:
+            await safe_send_message(
+                update,
+                f"File too large ({file_size:.1f}MB). Telegram limit is 50MB."
+            )
+
             os.remove(audio_file)
             return
 
-        # Send the audio file
-        caption = f"🎧 {title}\n⏱️ Downloaded in {elapsed_time:.1f}s"
-        success = await safe_send_audio(update, audio_file, caption)
-        
+        caption = (
+            f"🎧 {title}\n"
+            f"⏱️ Downloaded in {elapsed_time:.1f}s"
+        )
+
+        success = await safe_send_audio(
+            update,
+            audio_file,
+            caption
+        )
+
         if success:
-            await safe_send_message(update, f"✅ Audio sent successfully! ({elapsed_time:.1f}s)")
+            await safe_send_message(
+                update,
+                f"✅ Audio sent successfully! ({elapsed_time:.1f}s)"
+            )
         else:
-            await safe_send_message(update, "❌ Failed to send audio due to network issues. Please try again.")
-                
+            await safe_send_message(
+                update,
+                "❌ Failed to send audio due to network issues. Please try again."
+            )
+
     except Exception as e:
-        logger.error(f"Audio download error: {e}")
+
+        logger.error(
+            f"Audio download error: {e}"
+        )
+
         error_msg = str(e)
+
         if "cancelled" in error_msg.lower():
-            await safe_send_message(update, "⏹️ Download cancelled.")
+            await safe_send_message(
+                update,
+                "⏹️ Download cancelled."
+            )
         else:
-            await safe_send_message(update, "❌ Failed to download audio. Please try again later.")
+            await safe_send_message(
+                update,
+                "❌ Failed to download audio. Please try again later."
+            )
+
     finally:
-        
-        
-        # Clean up downloaded file
+
         if audio_file and os.path.exists(audio_file):
             try:
                 os.remove(audio_file)
-                logger.info(f"Cleaned up audio file: {audio_file}")
-            except Exception as e:
-                logger.error(f"Error cleaning up audio file: {e}")
-        
-        active_downloads.pop(user_id, None)
 
+                logger.info(
+                    f"Cleaned up audio file: {audio_file}"
+                )
+
+            except Exception as e:
+                logger.error(
+                    f"Error cleaning up audio file: {e}"
+                )
+
+        active_downloads.pop(
+            user_id,
+            None
+        )
 async def process_video(update: Update, context: ContextTypes.DEFAULT_TYPE, text: str, user_id: int):
     await safe_send_message(update, "⏳ Downloading video...")
     cancel_flag = threading.Event()
@@ -188,6 +348,8 @@ async def process_video(update: Update, context: ContextTypes.DEFAULT_TYPE, text
     try:
         url = YOUTUBE_URL_PATTERN.search(text).group(0)
         
+        # Import here to avoid circular imports
+        from downloader import download_video
         video_file, title, elapsed_time = download_video(url, cancel_flag)
 
         if not os.path.exists(video_file):
@@ -255,10 +417,74 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "/audio <link> - Download audio\n"
         "/video <link> - Download video\n"
         "/stop - Cancel current download\n\n"
-        "You can also just send a YouTube link directly!"
+        "You can also just sends a YouTube link directly!"
     )
     await safe_send_message(update, help_text)
 
+async def stats_command(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE
+):
+
+    total_users = get_total_users()
+
+    total_songs = get_total_songs()
+
+    total_downloads = get_total_downloads()
+
+    stats_text = (
+        "📊 Bot Statistics\n\n"
+        f"👤 Total Users: {total_users}\n"
+        f"🎵 Total Songs: {total_songs}\n"
+        f"⬇️ Total Downloads: {total_downloads}"
+    )
+
+    await safe_send_message(
+        update,
+        stats_text
+    )
+async def history_command(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE
+):
+
+    await safe_send_message(
+        update,
+        "📜 History feature coming soon."
+    )
+
+
+async def trending_command(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE
+):
+
+    songs = get_trending_songs()
+
+    if not songs:
+
+        await safe_send_message(
+            update,
+            "No songs downloaded yet."
+        )
+        return
+
+    message = "🔥 Top Downloaded Songs\n\n"
+
+    for i, song in enumerate(
+        songs,
+        start=1
+    ):
+
+        message += (
+            f"{i}. {song['title']}\n"
+            f"⬇️ {song['download_count']} downloads\n\n"
+        )
+
+    await safe_send_message(
+        update,
+        message
+    )
 async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle errors in the telegram bot."""
     error = context.error
@@ -276,23 +502,6 @@ async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 def main():
     """Start the bot."""
-    # Decode cookies from environment variable if present (for Render deployment)
-    cookies_base64 = os.getenv('COOKIES_BASE64')
-    if cookies_base64:
-        print("Decoding cookies.txt from environment...")
-        try:
-            cookies_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'cookies.txt')
-            with open(cookies_path, 'wb') as f:
-                f.write(base64.b64decode(cookies_base64))
-            print("✅ Cookies.txt created successfully!")
-        except Exception as e:
-            print(f"Error decoding cookies: {e}")
-            logger.error(f"Error decoding cookies: {e}")
-    
-    # Validate environment
-    if not BOT_TOKEN:
-        raise ValueError("BOT_TOKEN is not configured. Please set it in config.py")
-    
     # Ensure download directory exists
     os.makedirs(DOWNLOAD_DIR, exist_ok=True)
     
@@ -307,8 +516,15 @@ def main():
     app.add_handler(CommandHandler("help", help_command))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_text))
     
+    app.add_handler(
+    CommandHandler(
+        "stats",
+        stats_command
+    )
+)
     # Add error handler
     app.add_error_handler(error_handler)
+    
     
     # Start the Bot
     print("✅ Bot is starting...")
