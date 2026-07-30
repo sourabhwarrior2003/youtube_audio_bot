@@ -44,7 +44,6 @@ def download_audio(url: str, cancel_flag=None, proxy: str = None):
             'preferredcodec': 'mp3',
             'preferredquality': '192',
         }],
-        # Force Android client (provides direct URLs, avoids heavy JS challenges)
         'extractor_args': {'youtube': 'player_client=android'},
         'http_headers': {
             'User-Agent': random.choice(USER_AGENTS),
@@ -54,14 +53,12 @@ def download_audio(url: str, cancel_flag=None, proxy: str = None):
         'nocheckcertificate': True,
         'ignoreerrors': False,
         'progress_hooks': [progress_hook],
-        # Cookie support – if the file exists, use it (but note: cookies may cause client switching)
         'cookiefile': COOKIES_FILE_PATH if os.path.exists(COOKIES_FILE_PATH) else None,
         'quiet': False,
         'no_warnings': False,
-        # Sleep intervals to avoid rate limiting (HTTP 429)
-        'sleep_interval': 10,           # seconds between requests
+        'sleep_interval': 10,
         'max_sleep_interval': 20,
-        'sleep_interval_requests': 2,    # between API requests
+        'sleep_interval_requests': 2,
     }
 
     if proxy:
@@ -76,10 +73,8 @@ def download_audio(url: str, cancel_flag=None, proxy: str = None):
             original_title = info.get('title', 'audio')
             sanitized_title = sanitize_filename(original_title)
 
-            # Look for the converted MP3 file
             downloaded_files = [f for f in os.listdir(temp_download_dir) if f.endswith('.mp3')]
             if not downloaded_files:
-                # Fallback: any file (if conversion didn't happen but download succeeded)
                 downloaded_files = os.listdir(temp_download_dir)
 
             if not downloaded_files:
@@ -141,6 +136,56 @@ def download_video(url: str, cancel_flag=None, proxy: str = None):
             shutil.rmtree(temp_download_dir, ignore_errors=True)
 
             return final_filename, original_title, elapsed_time
+
+    except Exception as e:
+        shutil.rmtree(temp_download_dir, ignore_errors=True)
+        raise e
+
+
+# ===== NEW: Instagram downloader =====
+def download_instagram(url: str, cancel_flag=None, proxy: str = None):
+    """Download Instagram post (video or image) using yt-dlp."""
+    def progress_hook(d):
+        if cancel_flag and cancel_flag.is_set():
+            raise Exception("Download cancelled by user.")
+
+    temp_download_dir = tempfile.mkdtemp()
+    ydl_opts = {
+        'outtmpl': os.path.join(temp_download_dir, '%(title)s.%(ext)s'),
+        'noplaylist': True,
+        'http_headers': {'User-Agent': random.choice(USER_AGENTS)},
+        'nocheckcertificate': True,
+        'progress_hooks': [progress_hook],
+        'cookiefile': COOKIES_FILE_PATH if os.path.exists(COOKIES_FILE_PATH) else None,
+        'quiet': False,
+        'no_warnings': False,
+        # Instagram may need more specific extractor args; yt-dlp handles it by default
+    }
+    if proxy:
+        ydl_opts['proxy'] = proxy
+
+    try:
+        with YoutubeDL(ydl_opts) as ydl:
+            start_time = time.time()
+            info = ydl.extract_info(url, download=True)
+            elapsed_time = time.time() - start_time
+
+            original_title = info.get('title', 'instagram_post')
+            sanitized_title = sanitize_filename(original_title)
+
+            files = os.listdir(temp_download_dir)
+            if not files:
+                raise FileNotFoundError("No files downloaded")
+
+            # Use the first file (yt-dlp usually downloads a single media)
+            temp_file_path = os.path.join(temp_download_dir, files[0])
+            ext = os.path.splitext(files[0])[1]  # .mp4, .jpg, etc.
+            final_filename = os.path.join(DOWNLOAD_DIR, f"{sanitized_title}{ext}")
+
+            shutil.move(temp_file_path, final_filename)
+            shutil.rmtree(temp_download_dir, ignore_errors=True)
+
+            return final_filename, original_title, elapsed_time, ext
 
     except Exception as e:
         shutil.rmtree(temp_download_dir, ignore_errors=True)

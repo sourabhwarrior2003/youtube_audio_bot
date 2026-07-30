@@ -8,6 +8,14 @@ downloads/
 *.mp3
 *.mp4
 *.part
+test_db.py
+test_get_song.py
+test_get_user.py
+test_save_download.py
+test_save_song.py
+test_save_user.py
+test_stats.py
+
 
 cookies.txt
 cookies.txt.bak
